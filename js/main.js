@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const poster = document.createElement('img');
             poster.className = 'concert-poster';
             poster.src = concert.posterUrl;
-            poster.alt = `${concert.venue} Concert Poster`;
+            poster.alt = `${concert.title} Concert Poster`;
             card.appendChild(poster);
         } else {
             const placeholder = document.createElement('div');
@@ -75,6 +75,8 @@ document.addEventListener('DOMContentLoaded', () => {
         details.className = 'concert-details';
         details.innerHTML = `
             <div class="concert-date">${formatDate(concert.date)}</div>
+            <h3 class="concert-title">${concert.title}</h3>
+            <div class="concert-description">${concert.description}</div>
             <div class="concert-venue">${concert.venue}</div>
             <div class="concert-location">${concert.city}</div>
             <div class="concert-time">${formatTime(concert.time)}</div>
@@ -116,10 +118,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 return data.values.map(row => ({
                     date: row[0],
                     time: row[1],
-                    venue: row[2],
-                    city: row[3],
-                    ticketLink: row[4],
-                    posterUrl: row[5]
+                    title: row[2],
+                    description: row[3],
+                    venue: row[4],
+                    city: row[5],
+                    ticketLink: row[6],
+                    posterUrl: row[7]
                 }));
             })
             .catch(error => {

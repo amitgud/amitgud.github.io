@@ -1,7 +1,7 @@
-Date,Time,Venue,City,Ticket Link,Poster URL
-2025-03-15,19:30,Herbst Theatre,San Francisco,https://example.com/tickets/sf2025,https://example.com/posters/sf2025.jpg
-2025-04-02,18:30,Berkeley City Club,Berkeley,https://example.com/tickets/berkeley2025,https://example.com/posters/berkeley2025.jpg
-2025-04-20,19:00,San Jose Center for Performing Arts,San Jose,https://example.com/tickets/sj2025,https://example.com/posters/sj2025.jpg
-2025-05-10,20:00,Palace of Fine Arts,San Francisco,https://example.com/tickets/sf2025may,https://example.com/posters/sf2025may.jpg
-2025-06-15,18:00,Mountain View Center for Performing Arts,Mountain View,https://example.com/tickets/mv2025,https://example.com/posters/mv2025.jpg
-2025-07-01,19:30,Zellerbach Hall,Berkeley,https://example.com/tickets/berk2025july,https://example.com/posters/berk2025july.jpg
+Date,Time,Title,Description,Venue,City,Ticket Link,Poster URL
+2025-03-15,19:30,Raag Yaman: An Evening of Classical Music,"Experience the serene melodies of Raag Yaman, accompanied by tabla and harmonium. A perfect blend of vocal and instrumental music that takes you through the journey of this beautiful evening raag.",Herbst Theatre,San Francisco,https://example.com/tickets/sf2025,https://example.com/posters/sf2025.jpg
+2025-04-02,18:30,Thumri & Dadra: Light Classical Evening,"An intimate concert featuring semi-classical forms like Thumri and Dadra. The performance will showcase the romantic and devotional aspects of Indian classical music.",Berkeley City Club,Berkeley,https://example.com/tickets/berkeley2025,https://example.com/posters/berkeley2025.jpg
+2025-04-20,19:00,Dhrupad Dhamar: Ancient Classical Traditions,"Discover the oldest surviving form of Indian classical music. This concert features the profound and meditative Dhrupad style, with traditional instruments like the rudra veena.",San Jose Center for Performing Arts,San Jose,https://example.com/tickets/sj2025,https://example.com/posters/sj2025.jpg
+2025-05-10,20:00,Fusion: Where Traditions Meet,"A unique fusion concert blending Indian classical music with western instruments. Experience the harmony of sitar and violin, tabla and drums, creating a mesmerizing global sound.",Palace of Fine Arts,San Francisco,https://example.com/tickets/sf2025may,https://example.com/posters/sf2025may.jpg
+2025-06-15,18:00,Monsoon Ragas,"Welcome the monsoon season with raags traditionally associated with rain and thunder. Features popular raags like Megh and Malhar that capture the essence of the rainy season.",Mountain View Center for Performing Arts,Mountain View,https://example.com/tickets/mv2025,https://example.com/posters/mv2025.jpg
+2025-07-01,19:30,Classical Jugalbandi,"An exciting duet performance featuring two maestros of Indian classical music. Watch as they engage in a musical dialogue, exchanging improvisations and building to a crescendo.",Zellerbach Hall,Berkeley,https://example.com/tickets/berk2025july,https://example.com/posters/berk2025july.jpg
