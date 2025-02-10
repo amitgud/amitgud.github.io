@@ -275,7 +275,8 @@ section h2 {
 
 .youtube-feed {
     grid-column: 1 / -1;
-    max-width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .youtube-player {
@@ -297,9 +298,9 @@ section h2 {
 
 .youtube-playlist {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1rem;
-    margin-top: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.75rem;
+    margin-top: 0.75rem;
 }
 
 .video-thumbnail {
@@ -309,7 +310,7 @@ section h2 {
 }
 
 .video-thumbnail:hover {
-    transform: translateY(-3px);
+    transform: translateY(-2px);
 }
 
 .video-thumbnail img {
@@ -321,27 +322,23 @@ section h2 {
 
 .video-thumbnail .duration {
     position: absolute;
-    bottom: 8px;
-    right: 8px;
+    bottom: 6px;
+    right: 6px;
     background: rgba(0, 0, 0, 0.8);
     color: white;
-    padding: 2px 4px;
+    padding: 1px 3px;
     border-radius: 2px;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
 }
 
 .video-thumbnail .title {
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
-    line-height: 1.4;
+    margin-top: 0.4rem;
+    font-size: 0.85rem;
+    line-height: 1.3;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-}
-
-.video-thumbnail.active {
-    position: relative;
 }
 
 .video-thumbnail.active::before {
@@ -353,8 +350,8 @@ section h2 {
     background: rgba(var(--primary-color-rgb), 0.9);
     color: white;
     text-align: center;
-    padding: 4px;
-    font-size: 0.8rem;
+    padding: 3px;
+    font-size: 0.75rem;
     border-radius: 4px 4px 0 0;
 }
 
@@ -432,5 +429,14 @@ footer {
 
     .hero-content h1 {
         font-size: 2rem;
+    }
+
+    .youtube-feed {
+        max-width: 100%;
+        padding: 0 1rem;
+    }
+
+    .youtube-playlist {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     }
 }

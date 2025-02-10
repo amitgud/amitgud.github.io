@@ -10,7 +10,7 @@ const CONFIG = {
     // YouTube Configuration
     YOUTUBE: {
         CHANNEL_ID: 'YOUR_CHANNEL_ID', // Your YouTube channel ID
-        MAX_RESULTS: 6, // Number of videos to display
+        MAX_RESULTS: 4, // Number of videos to display (reduced from 6)
         API_KEY: 'YOUR_YOUTUBE_API_KEY' // Your YouTube Data API key
     }
 };
