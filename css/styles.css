@@ -273,6 +273,91 @@ section h2 {
     gap: 0.5rem;
 }
 
+.youtube-feed {
+    grid-column: 1 / -1;
+    max-width: 100%;
+}
+
+.youtube-player {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+    margin-bottom: 1rem;
+}
+
+.youtube-player iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 4px;
+}
+
+.youtube-playlist {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.video-thumbnail {
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.video-thumbnail:hover {
+    transform: translateY(-3px);
+}
+
+.video-thumbnail img {
+    width: 100%;
+    border-radius: 4px;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+}
+
+.video-thumbnail .duration {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 2px 4px;
+    border-radius: 2px;
+    font-size: 0.8rem;
+}
+
+.video-thumbnail .title {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.video-thumbnail.active {
+    position: relative;
+}
+
+.video-thumbnail.active::before {
+    content: '▶ Now Playing';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(var(--primary-color-rgb), 0.9);
+    color: white;
+    text-align: center;
+    padding: 4px;
+    font-size: 0.8rem;
+    border-radius: 4px 4px 0 0;
+}
+
 .instagram-media-container,
 .twitter-timeline-container,
 .tiktok-embed {

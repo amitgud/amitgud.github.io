@@ -79,6 +79,18 @@
         <section id="social-feeds" class="social-feeds">
             <h2>Follow Me on Social Media</h2>
             <div class="feeds-container">
+                <div class="feed youtube-feed">
+                    <h3><i class="fab fa-youtube"></i> Latest Videos</h3>
+                    <div id="youtube-player" class="youtube-player"></div>
+                    <div id="youtube-playlist" class="youtube-playlist">
+                        <!-- Video thumbnails will be dynamically added here -->
+                        <div class="loading-spinner">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Loading videos...</p>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="feed instagram-feed">
                     <h3><i class="fab fa-instagram"></i> Instagram</h3>
                     <!-- Replace USERNAME with actual Instagram username -->
@@ -121,5 +133,7 @@
     <script async src="https://www.instagram.com/embed.js"></script>
     <script async src="https://platform.twitter.com/widgets.js"></script>
     <script async src="https://www.tiktok.com/embed.js"></script>
+    <!-- YouTube IFrame API -->
+    <script async src="https://www.youtube.com/iframe_api"></script>
 </body>
 </html>

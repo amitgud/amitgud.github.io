@@ -183,6 +183,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize social media feeds
     const initializeSocialFeeds = () => {
+        // Initialize YouTube feed
+        initializeYouTubeFeed();
+
         // Refresh Instagram embed
         if (window.instgrm) {
             window.instgrm.Embeds.process();
@@ -193,6 +196,137 @@ document.addEventListener('DOMContentLoaded', () => {
             const script = document.createElement('script');
             script.src = 'https://www.tiktok.com/embed.js';
             document.body.appendChild(script);
+        }
+    };
+
+    // YouTube functionality
+    let player;
+    let currentVideoId;
+    const playlistElement = document.getElementById('youtube-playlist');
+
+    // Format duration from ISO 8601 format
+    const formatDuration = (duration) => {
+        const match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
+        const hours = (match[1] || '').replace('H', '');
+        const minutes = (match[2] || '').replace('M', '');
+        const seconds = (match[3] || '').replace('S', '');
+        
+        let formatted = '';
+        if (hours) formatted += `${hours}:`;
+        formatted += `${minutes.padStart(2, '0')}:`;
+        formatted += seconds.padStart(2, '0');
+        
+        return formatted;
+    };
+
+    // Create video thumbnail element
+    const createVideoThumbnail = (video) => {
+        const thumbnail = document.createElement('div');
+        thumbnail.className = 'video-thumbnail';
+        thumbnail.setAttribute('data-video-id', video.id);
+        
+        thumbnail.innerHTML = `
+            <img src="${video.thumbnail}" alt="${video.title}">
+            <div class="duration">${video.duration}</div>
+            <div class="title">${video.title}</div>
+        `;
+        
+        thumbnail.addEventListener('click', () => {
+            playVideo(video.id);
+            // Update active state
+            document.querySelectorAll('.video-thumbnail').forEach(thumb => {
+                thumb.classList.remove('active');
+            });
+            thumbnail.classList.add('active');
+        });
+        
+        return thumbnail;
+    };
+
+    // Play video in the player
+    const playVideo = (videoId) => {
+        if (player && videoId !== currentVideoId) {
+            player.loadVideoById(videoId);
+            currentVideoId = videoId;
+        }
+    };
+
+    // Initialize YouTube player
+    function onYouTubeIframeAPIReady() {
+        // Create player once we have video data
+        fetchYouTubeVideos().then(videos => {
+            if (videos.length > 0) {
+                player = new YT.Player('youtube-player', {
+                    height: '100%',
+                    width: '100%',
+                    videoId: videos[0].id,
+                    playerVars: {
+                        modestbranding: 1,
+                        rel: 0
+                    },
+                    events: {
+                        onReady: (event) => {
+                            currentVideoId = videos[0].id;
+                            // Mark first video as active
+                            const firstThumbnail = document.querySelector('.video-thumbnail');
+                            if (firstThumbnail) {
+                                firstThumbnail.classList.add('active');
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    // Fetch videos from YouTube API
+    const fetchYouTubeVideos = async () => {
+        try {
+            // First, get playlist items
+            const response = await fetch(
+                `https://www.googleapis.com/youtube/v3/search?` +
+                `part=snippet&channelId=${CONFIG.YOUTUBE.CHANNEL_ID}&maxResults=${CONFIG.YOUTUBE.MAX_RESULTS}` +
+                `&order=date&type=video&key=${CONFIG.YOUTUBE.API_KEY}`
+            );
+            
+            if (!response.ok) throw new Error('Failed to fetch YouTube videos');
+            
+            const data = await response.json();
+            const videoIds = data.items.map(item => item.id.videoId).join(',');
+            
+            // Then, get video details including duration
+            const detailsResponse = await fetch(
+                `https://www.googleapis.com/youtube/v3/videos?` +
+                `part=contentDetails,snippet&id=${videoIds}&key=${CONFIG.YOUTUBE.API_KEY}`
+            );
+            
+            if (!detailsResponse.ok) throw new Error('Failed to fetch video details');
+            
+            const detailsData = await detailsResponse.json();
+            
+            // Process videos
+            const videos = detailsData.items.map(item => ({
+                id: item.id,
+                title: item.snippet.title,
+                thumbnail: item.snippet.thumbnails.high.url,
+                duration: formatDuration(item.contentDetails.duration)
+            }));
+            
+            // Update playlist
+            playlistElement.innerHTML = '';
+            videos.forEach(video => {
+                playlistElement.appendChild(createVideoThumbnail(video));
+            });
+            
+            return videos;
+        } catch (error) {
+            console.error('Error fetching YouTube videos:', error);
+            playlistElement.innerHTML = `
+                <div class="error-message">
+                    <p>Unable to load YouTube videos. Please try again later.</p>
+                </div>
+            `;
+            return [];
         }
     };
 
