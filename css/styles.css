@@ -100,7 +100,7 @@ nav {
     z-index: 1;
     background: linear-gradient(
         transparent,
-        rgba(0, 0, 0, 0.4) 30%,
+        rgba(0, 0, 0, 0.4) 90%,
         rgba(0, 0, 0, 0.6)
     );
     width: 100%;
