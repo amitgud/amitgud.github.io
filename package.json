@@ -1,0 +1,11 @@
+{
+  "name": "classical-musician-website",
+  "version": "1.0.0",
+  "description": "Classical Musician Website",
+  "scripts": {
+    "start": "http-server -p 8080 -c-1"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}

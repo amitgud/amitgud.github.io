@@ -59,10 +59,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Create poster element
         if (concert.posterUrl) {
+            console.log('Loading poster URL:', concert.posterUrl);
             const poster = document.createElement('img');
             poster.className = 'concert-poster';
-            poster.src = concert.posterUrl;
+            // Use Google Drive's direct download URL with the file ID
+            poster.src = `https://www.googleapis.com/drive/v3/files/${concert.posterUrl}?alt=media&key=${CONFIG.API_KEY}`;
             poster.alt = `${concert.title} Concert Poster`;
+            poster.onerror = () => {
+                console.error('Failed to load image:', concert.posterUrl);
+                // Replace with placeholder on error
+                const placeholder = document.createElement('div');
+                placeholder.className = 'concert-poster placeholder';
+                placeholder.innerHTML = '<i class="fas fa-music"></i>';
+                card.replaceChild(placeholder, poster);
+            };
             card.appendChild(poster);
         } else {
             const placeholder = document.createElement('div');
@@ -74,12 +84,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const details = document.createElement('div');
         details.className = 'concert-details';
         details.innerHTML = `
-            <div class="concert-date">${formatDate(concert.date)}</div>
+            <div class="concert-date">${formatDate(concert.date)} ${concert.time}</div>
             <h3 class="concert-title">${concert.title}</h3>
             <div class="concert-description">${concert.description}</div>
             <div class="concert-venue">${concert.venue}</div>
             <div class="concert-location">${concert.city}</div>
-            <div class="concert-time">${formatTime(concert.time)}</div>
+            <div class="concert-time">${concert.time}</div>
             ${concert.ticketLink ? `<a href="${concert.ticketLink}" class="ticket-link" target="_blank">Get Tickets</a>` : ''}
         `;
         card.appendChild(details);
@@ -105,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
 
         fetchPromise = fetch(
-            `https://sheets.googleapis.com/v4/spreadsheets/${CONFIG.SHEET_ID}/values/${CONFIG.SHEET_RANGE}?key=${CONFIG.API_KEY}`
+            `https://sheets.googleapis.com/v4/spreadsheets/1cjXskehYNuX7zhEij-6MuMLZZji8k9-VUTR1a_5UJTE/values/${CONFIG.SHEET_RANGE}?key=${CONFIG.API_KEY}`
         )
             .then(response => {
                 if (!response.ok) {
@@ -115,16 +125,23 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .then(data => {
                 lastFetchTime = now;
-                return data.values.map(row => ({
-                    date: row[0],
-                    time: row[1],
-                    title: row[2],
-                    description: row[3],
-                    venue: row[4],
-                    city: row[5],
-                    ticketLink: row[6],
-                    posterUrl: row[7]
-                }));
+                // console.log('Raw data from sheets:', data);
+                if (!data.values || !Array.isArray(data.values)) {
+                    console.error('Invalid data format. Expected array of values:', data);
+                    throw new Error('Invalid data format');
+                }
+                return data.values.map((row, index) => {
+                    return {
+                        date: row[0],
+                        time: row[1],
+                        title: row[2],
+                        description: row[3],
+                        venue: row[4],
+                        city: row[5],
+                        ticketLink: row[6],
+                        posterUrl: row[7]
+                    };
+                });
             })
             .catch(error => {
                 console.error('Error fetching concert data:', error);
