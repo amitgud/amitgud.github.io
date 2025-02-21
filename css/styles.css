@@ -256,6 +256,36 @@ section h2 {
     border: 1px solid #FED7D7;
 }
 
+/* Concert sections */
+.concert-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.concert-section {
+    width: 100%;
+}
+
+.concert-section h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+.past-concerts {
+    opacity: 0.8;
+}
+
+.past-concerts .concert-card {
+    background: #f8f8f8;
+}
+
+.past-concerts .ticket-link {
+    display: none;
+}
+
 /* Gallery Section */
 .gallery-grid {
     display: grid;
@@ -388,6 +418,18 @@ section h2 {
     background: #fafafa;
     border-radius: 4px;
     overflow: hidden;
+}
+
+/* Responsive design for concert sections */
+@media (max-width: 768px) {
+    .concert-sections {
+        gap: 2rem;
+    }
+    
+    .concert-section h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
 }
 
 /* Footer */

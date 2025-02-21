@@ -161,32 +161,81 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const concerts = await fetchConcerts();
             
-            // Clear existing content
-            concertList.innerHTML = '';
+            // Sort concerts by date
+            const now = new Date();
+            const upcomingConcerts = [];
+            const pastConcerts = [];
+            
+            concerts.forEach(concert => {
+                const concertDate = new Date(`${concert.date} ${concert.time}`);
+                if (concertDate >= now) {
+                    upcomingConcerts.push(concert);
+                } else {
+                    pastConcerts.push(concert);
+                }
+            });
 
-            // Filter out past concerts
-            const upcomingConcerts = concerts.filter(concert => 
-                new Date(`${concert.date} ${concert.time}`) >= new Date()
-            );
-
-            // Sort by date
-            upcomingConcerts.sort((a, b) => 
+            // Sort upcoming concerts by date (nearest first)
+            upcomingConcerts.sort((a, b) =>
                 new Date(`${a.date} ${a.time}`) - new Date(`${b.date} ${b.time}`)
             );
 
+            // Sort past concerts by date (most recent first)
+            pastConcerts.sort((a, b) =>
+                new Date(`${b.date} ${b.time}`) - new Date(`${a.date} ${a.time}`)
+            );
+
+            // Clear existing content
+            concertList.innerHTML = '';
+
+            // Create sections container
+            const sectionsContainer = document.createElement('div');
+            sectionsContainer.className = 'concert-sections';
+
+            // Add upcoming concerts section
+            const upcomingSection = document.createElement('div');
+            upcomingSection.className = 'concert-section upcoming-concerts';
+            upcomingSection.innerHTML = '<h3>Upcoming Concerts</h3>';
+
             if (upcomingConcerts.length === 0) {
-                concertList.innerHTML = `
+                upcomingSection.innerHTML += `
                     <div class="error-message">
                         <p>No upcoming concerts scheduled at this time.</p>
                     </div>
                 `;
-                return;
+            } else {
+                const upcomingGrid = document.createElement('div');
+                upcomingGrid.className = 'concert-grid';
+                upcomingConcerts.forEach(concert => {
+                    upcomingGrid.appendChild(createConcertCard(concert));
+                });
+                upcomingSection.appendChild(upcomingGrid);
             }
 
-            // Add concert cards
-            upcomingConcerts.forEach(concert => {
-                concertList.appendChild(createConcertCard(concert));
-            });
+            // Add past concerts section
+            const pastSection = document.createElement('div');
+            pastSection.className = 'concert-section past-concerts';
+            pastSection.innerHTML = '<h3>Past Concerts</h3>';
+
+            if (pastConcerts.length === 0) {
+                pastSection.innerHTML += `
+                    <div class="error-message">
+                        <p>No past concerts to display.</p>
+                    </div>
+                `;
+            } else {
+                const pastGrid = document.createElement('div');
+                pastGrid.className = 'concert-grid';
+                pastConcerts.forEach(concert => {
+                    pastGrid.appendChild(createConcertCard(concert));
+                });
+                pastSection.appendChild(pastGrid);
+            }
+
+            // Add sections to container
+            sectionsContainer.appendChild(upcomingSection);
+            sectionsContainer.appendChild(pastSection);
+            concertList.appendChild(sectionsContainer);
         } catch (error) {
             console.error('Error updating concerts:', error);
         }
