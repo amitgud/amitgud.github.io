@@ -158,20 +158,43 @@ section h2 {
 /* About Section */
 .about {
     background-color: var(--background-alt);
+    width: 100%;
+    padding: 5rem 2rem;
 }
 
 .about-content {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
+    display: flex;
+    flex-direction: column;
     gap: 2rem;
-    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .image-placeholder {
     background-color: #eee;
-    width: 100%;
-    padding-top: 100%;
+    width: 300px;
+    height: 300px;
     border-radius: 50%;
+    margin: 0 auto;
+}
+
+.bio-text {
+    text-align: justify;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.8;
+    color: var(--text-color);
+}
+
+/* Update responsive styling */
+@media (max-width: 768px) {
+    .about {
+        padding: 3rem 1.5rem;
+    }
+
+    .image-placeholder {
+        width:
+    }
 }
 
 /* Concerts Section */
@@ -641,4 +664,13 @@ footer {
     .youtube-playlist {
         grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     }
+}
+
+.artist-bio p {
+    margin-bottom: 2rem;  /* Increases spacing between paragraphs */
+    line-height: 1.8;     /* Improves readability */
+}
+
+.artist-bio p:last-child {
+    margin-bottom: 0;     /* Removes extra spacing after last paragraph */
 }
