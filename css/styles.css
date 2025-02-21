@@ -75,32 +75,70 @@ nav {
 
 /* Hero Section */
 .hero {
+    position: relative;
     height: 100vh;
-    background: linear-gradient(rgba(45, 48, 71, 0.7), rgba(45, 48, 71, 0.7)), url('../images/hero-bg.jpg');
-    background-size: cover;
-    background-position: center;
+    min-height: 600px;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
     text-align: center;
+    background: linear-gradient(
+        rgba(0, 0, 0, 0.2),
+        rgba(0, 0, 0, 0.4) 70%,
+        rgba(0, 0, 0, 0.8)
+    ), url('../images/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     color: white;
 }
 
 .hero-content {
-    padding: 2rem;
+    max-width: 800px;
+    padding: 4rem 2rem;
+    padding-bottom: 6rem;
+    z-index: 1;
+    background: linear-gradient(
+        transparent,
+        rgba(0, 0, 0, 0.4) 30%,
+        rgba(0, 0, 0, 0.6)
+    );
+    width: 100%;
 }
 
 .hero-content h1 {
+    font-family: 'Playfair Display', serif;
     font-size: 3.5rem;
-    margin-bottom: 1rem;
-    font-weight: 600;
+    margin-bottom: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .hero-content p {
-    font-size: 1.2rem;
-    font-weight: 300;
-    max-width: 600px;
-    margin: 0 auto;
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+    .hero {
+        min-height: 500px;
+    }
+
+    .hero-content {
+        padding: 3rem 1.5rem;
+        padding-bottom: 4rem;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .hero-content p {
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+    }
 }
 
 /* Sections */
@@ -494,10 +532,6 @@ footer {
 
     .about-content {
         grid-template-columns: 1fr;
-    }
-
-    .hero-content h1 {
-        font-size: 2rem;
     }
 
     .youtube-feed {
