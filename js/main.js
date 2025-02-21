@@ -59,11 +59,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Create poster element
         if (concert.posterUrl) {
-            console.log('Loading poster URL:', concert.posterUrl);
+            // console.log('Loading poster URL:', concert.posterUrl);
             const poster = document.createElement('img');
             poster.className = 'concert-poster';
             // Use Google Drive's direct download URL with the file ID
             poster.src = `https://www.googleapis.com/drive/v3/files/${concert.posterUrl}?alt=media&key=${CONFIG.API_KEY}`;
+            console.log(poster.src);
             poster.alt = `${concert.title} Concert Poster`;
             poster.onerror = () => {
                 console.error('Failed to load image:', concert.posterUrl);
@@ -263,6 +264,17 @@ document.addEventListener('DOMContentLoaded', () => {
             script.src = 'https://www.tiktok.com/embed.js';
             document.body.appendChild(script);
         }
+    };
+
+    const initializeYouTubeFeed = () => {
+        // Load YouTube IFrame API
+        const tag = document.createElement('script');
+        tag.src = 'https://www.youtube.com/iframe_api';
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        // Initial fetch of videos
+        fetchYouTubeVideos();
     };
 
     // YouTube functionality
