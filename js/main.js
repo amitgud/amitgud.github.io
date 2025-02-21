@@ -359,6 +359,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+
     // Call initialization after page load
     window.addEventListener('load', initializeSocialFeeds);
 });
