@@ -59,16 +59,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Create poster element
         if (concert.posterUrl) {
-            // console.log('Loading poster URL:', concert.posterUrl);
             const poster = document.createElement('img');
             poster.className = 'concert-poster';
-            // Use Google Drive's direct download URL with the file ID
             poster.src = `https://www.googleapis.com/drive/v3/files/${concert.posterUrl}?alt=media&key=${CONFIG.API_KEY}`;
-            console.log(poster.src);
             poster.alt = `${concert.title} Concert Poster`;
+            
+            // Add click event for modal
+            poster.addEventListener('click', () => {
+                const modal = document.getElementById('posterModal');
+                const modalImg = document.getElementById('modalImage');
+                modal.style.display = 'block';
+                modalImg.src = poster.src;
+                modalImg.alt = poster.alt;
+            });
+
             poster.onerror = () => {
                 console.error('Failed to load image:', concert.posterUrl);
-                // Replace with placeholder on error
                 const placeholder = document.createElement('div');
                 placeholder.className = 'concert-poster placeholder';
                 placeholder.innerHTML = '<i class="fas fa-music"></i>';
@@ -247,6 +253,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Refresh periodically
     setInterval(updateConcerts, CONFIG.REFRESH_INTERVAL);
+
+    // Modal functionality
+    const modal = document.getElementById('posterModal');
+    const closeBtn = document.querySelector('.close-modal');
+
+    closeBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
 
     // Initialize social media feeds
     const initializeSocialFeeds = () => {
